@@ -31,6 +31,7 @@ class Prime
       primes << n if self.class.is_prime(n)
       progress.increment
     end
+    puts progress
     primes
   end
 
