@@ -39,9 +39,7 @@ class Prime
       in_processes: NUM_PROCESSORS,
       progress: "#{NUM_PROCESSORS} processes"
     ) do |slice|
-      slice.map do |n|
-        n if self.class.is_prime(n)
-      end.compact
+      slice.reduce([]) { |memo, n| memo << n if self.class.is_prime(n); memo }
     end.flatten
   end
 
