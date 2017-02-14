@@ -1,4 +1,11 @@
+# https://github.com/grosser/parallel
+# make sure you first do
+# `gem install parallel`
+require "parallel"
 require "ruby-progressbar"
+require 'etc'
+
+NUM_PROCESSORS = Etc.nprocessors
 
 class Prime
   # check for primality
@@ -25,13 +32,17 @@ class Prime
   end
 
   def list_primes
-    primes = []
-    progress = ProgressBar.create(total: @end)
-    (@start..@end).each do |n|
-      primes << n if self.class.is_prime(n)
-      progress.increment
-    end
-    primes
+    slices = []
+    (@start..@end).each_slice(@end / NUM_PROCESSORS) { |slice| slices << slice }
+
+    Parallel.map(slices,
+      in_processes: NUM_PROCESSORS,
+      progress: "#{NUM_PROCESSORS} processes"
+    ) do |slice|
+      slice.map do |n|
+        n if self.class.is_prime(n)
+      end.compact
+    end.flatten
   end
 
   def count_primes
