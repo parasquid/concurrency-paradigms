@@ -1,6 +1,11 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    concurrent-ruby (1.0.4)
+    concurrent-ruby-edge (0.3.0)
+      concurrent-ruby (= 1.0.4)
+    concurrent-ruby-ext (1.0.4)
+      concurrent-ruby (= 1.0.4)
     parallel (1.10.0)
     ruby-progressbar (1.8.1)
 
@@ -8,6 +13,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  concurrent-ruby
+  concurrent-ruby-edge
+  concurrent-ruby-ext
   parallel
   ruby-progressbar
 

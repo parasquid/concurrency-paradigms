@@ -1,11 +1,9 @@
 require "ruby-progressbar"
 require_relative "primes"
 
-first = 1
-last = 10_000_000
 primes = []
-progress = ProgressBar.create(total: last)
-(first..last).each do |n|
+progress = ProgressBar.create(total: LAST)
+(FIRST..LAST).each do |n|
   primes << n if Primes.is_prime(n)
   progress.increment
 end

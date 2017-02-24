@@ -7,3 +7,6 @@ end
 
 gem "ruby-progressbar"
 gem "parallel"
+gem "concurrent-ruby"
+gem "concurrent-ruby-edge"
+gem "concurrent-ruby-ext"
