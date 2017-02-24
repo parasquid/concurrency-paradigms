@@ -7,10 +7,48 @@ require_relative "primes"
 NUM_PROCESSORS = Etc.nprocessors
 Channel = Concurrent::Channel
 
-work = Channel.new(capacity: NUM_PROCESSORS)
-primes = Channel.new(capacity: NUM_PROCESSORS)
-palindromes = Channel.new(capacity: NUM_PROCESSORS)
-messages = Channel.new(capacity: NUM_PROCESSORS)
+work = Channel.new(capacity: LAST)
+primes = Channel.new(capacity: LAST)
+palindromes = Channel.new(capacity: LAST)
+messages = Channel.new(capacity: LAST)
+
+done = Channel.new(capacity: 1)
+
+(1..NUM_PROCESSORS).each do |prime_worker|
+  Channel.go {
+    work.each do |n|
+      if Primes.is_prime(n)
+        primes << n
+      else
+        primes << false
+      end
+    end
+  }
+end
+
+(1..NUM_PROCESSORS).each do |palindrome_worker|
+  Channel.go {
+    primes.each do |n|
+      if n && Primes.is_palindrome(n)
+        palindromes << n
+      else
+        palindromes << false
+      end
+    end
+  }
+end
+
+(1..NUM_PROCESSORS).each do |message_worker|
+  Channel.go {
+    palindromes.each do |n|
+      if n
+        messages << "#{n} is a palindromic prime"
+      else
+        messages << false
+      end
+    end
+  }
+end
 
 Channel.go {
   (FIRST..LAST).each_with_index do |n, index|
@@ -20,33 +58,12 @@ Channel.go {
 }
 
 Channel.go {
-  work.each do |n|
-    if Primes.is_prime(n)
-      primes << n
-    end
+  (FIRST..LAST).each do |n|
+    message = ~messages
+    puts message if message
   end
-  puts "work unblocked!"
-  primes.close
+  done << "all done!"
 }
 
-Channel.go {
-  primes.each do |n|
-    if Primes.is_palindrome(n)
-      palindromes << n
-    end
-  end
-  puts "primes unblocked!"
-  palindromes.close
-}
 
-Channel.go {
-  palindromes.each do |n|
-    messages << "#{n} is a palindromic prime"
-  end
-  puts "palindromes unblocked!"
-  messages.close
-}
-
-messages.each do |message|
-  puts message
-end
+puts ~done
