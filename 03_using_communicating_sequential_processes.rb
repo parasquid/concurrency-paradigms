@@ -51,7 +51,7 @@ end
 end
 
 Channel.go {
-  (FIRST..LAST).each_with_index do |n, index|
+  (FIRST..LAST).each_with_index do |n|
     work << n
   end
   work.close
