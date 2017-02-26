@@ -1,17 +1,17 @@
 require "ruby-progressbar"
-require_relative "primes"
+require_relative "numeric"
 
 primes = []
 progress = ProgressBar.create(total: LAST)
 (FIRST..LAST).each do |n|
-  primes << n if Primes.is_prime(n)
+  primes << n if n.is_prime?
   progress.increment
 end
 
 palindromes = []
 progress = ProgressBar.create(total: primes.count)
 primes.each do |n|
-  palindromes << n if Primes.is_palindrome(n)
+  palindromes << n if n.is_palindrome?
   progress.increment
 end
 

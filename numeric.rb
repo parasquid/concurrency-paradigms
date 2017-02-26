@@ -1,10 +1,11 @@
-SIMULATE_NETWORK_LATENCY = false
-DELAY = 0.2
+SIMULATE_NETWORK_LATENCY = true
+NETWORK_DELAY = 0.2
 
-class Primes
+class Numeric
   # check for primality
   # see https://en.wikipedia.org/wiki/Primality_test#Pseudocode
-  def self.is_prime(n)
+  def is_prime?
+    n = self
     return false if n <= 1
     return true if n <= 3
     return false if n % 2 == 0
@@ -17,14 +18,14 @@ class Primes
       i = i + 6
     end
 
-    sleep DELAY if SIMULATE_NETWORK_LATENCY
+    sleep NETWORK_DELAY if SIMULATE_NETWORK_LATENCY
     true # fell through sieve, must be prime
   end
 
-  def self.is_palindrome(n)
-    number = n.to_s
+  def is_palindrome?
+    number = self.to_s
 
-    sleep DELAY if SIMULATE_NETWORK_LATENCY
+    sleep NETWORK_DELAY if SIMULATE_NETWORK_LATENCY
     number == number.reverse
   end
 

@@ -1,7 +1,7 @@
 require "parallel"
 require "ruby-progressbar"
 require 'etc'
-require_relative "primes"
+require_relative "numeric"
 
 NUM_PROCESSORS = Etc.nprocessors
 
@@ -12,7 +12,7 @@ primes = Parallel.map(slices,
   in_processes: NUM_PROCESSORS,
   progress: "#{NUM_PROCESSORS} processes"
 ) do |slice|
-  slice.reduce([]) { |memo, n| memo << n if Primes.is_prime(n); memo }
+  slice.reduce([]) { |memo, n| memo << n if n.is_prime?; memo }
 end.flatten
 
 
@@ -23,7 +23,7 @@ palindromes = Parallel.map(slices,
   in_processes: NUM_PROCESSORS,
   progress: "#{NUM_PROCESSORS} processes"
 ) do |slice|
-  slice.reduce([]) { |memo, n| memo << n if Primes.is_palindrome(n); memo }
+  slice.reduce([]) { |memo, n| memo << n if n.is_palindrome?; memo }
 end.flatten
 
 palindromes.each do |n|

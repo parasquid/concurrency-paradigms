@@ -1,10 +1,9 @@
-require "ruby-progressbar"
 require "concurrent"
 require "concurrent-edge"
 require 'etc'
-require_relative "primes"
+require_relative "numeric"
 
-NUM_PROCESSORS = Etc.nprocessors
+WORKER_COUNT = Etc.nprocessors
 Channel = Concurrent::Channel
 
 work = Channel.new(capacity: LAST)
@@ -14,38 +13,26 @@ messages = Channel.new(capacity: LAST)
 
 done = Channel.new(capacity: 1)
 
-(1..NUM_PROCESSORS).each do |prime_worker|
+WORKER_COUNT.times do |prime_worker|
   Channel.go {
     work.each do |n|
-      if Primes.is_prime(n)
-        primes << n
-      else
-        primes << false
-      end
+      primes << (n.is_prime? ? n : false)
     end
   }
 end
 
-(1..NUM_PROCESSORS).each do |palindrome_worker|
+WORKER_COUNT.times do |palindrome_worker|
   Channel.go {
     primes.each do |n|
-      if n && Primes.is_palindrome(n)
-        palindromes << n
-      else
-        palindromes << false
-      end
+      palindromes << (n && n.is_palindrome? ? n : false)
     end
   }
 end
 
-(1..NUM_PROCESSORS).each do |message_worker|
+WORKER_COUNT.times do |message_worker|
   Channel.go {
     palindromes.each do |n|
-      if n
-        messages << "#{n} is a palindromic prime"
-      else
-        messages << false
-      end
+      messages << (n ? "#{n} is a palindromic prime" : false)
     end
   }
 end
@@ -54,7 +41,6 @@ Channel.go {
   (FIRST..LAST).each_with_index do |n|
     work << n
   end
-  work.close
 }
 
 Channel.go {
@@ -62,8 +48,8 @@ Channel.go {
     message = ~messages
     puts message if message
   end
+
   done << "all done!"
 }
-
 
 puts ~done
