@@ -6,6 +6,7 @@ GEM
       concurrent-ruby (= 1.0.4)
     concurrent-ruby-ext (1.0.4)
       concurrent-ruby (= 1.0.4)
+    eventmachine (1.2.0.1)
     parallel (1.10.0)
     ruby-progressbar (1.8.1)
 
@@ -16,6 +17,7 @@ DEPENDENCIES
   concurrent-ruby
   concurrent-ruby-edge
   concurrent-ruby-ext
+  eventmachine
   parallel
   ruby-progressbar
 
