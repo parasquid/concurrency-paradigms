@@ -19,7 +19,7 @@ EM.run {
 
   print_messages = ->{
     n = palindromes.shift
-    puts n if n
+    puts "#{n} is a palindromic prime" if n
   }
 
   timer = 0
@@ -28,12 +28,11 @@ EM.run {
   }
 
   tickloop = EM.tick_loop do
-    if work.empty?
+    if work.empty? && primes.empty? && palindromes.empty?
       :stop
     else
-      EM.next_tick(calculate_primes)
-      EM.next_tick(calculate_palindromes)
-      EM.next_tick(print_messages)
+      operations = [calculate_primes, calculate_palindromes, print_messages]
+      EM.next_tick(operations.sample)
     end
   end
   tickloop.on_stop { EM.stop }
