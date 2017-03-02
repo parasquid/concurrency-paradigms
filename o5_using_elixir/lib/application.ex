@@ -10,7 +10,8 @@ defmodule App do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: Blank.Worker.start_link(arg1, arg2, arg3)
+      # Starts a worker by calling: Worker.start_link(arg1, arg2, arg3)
+      supervisor(Task.Supervisor, [[name: TaskSupervisor]])
       # worker(Blank.Worker, [arg1, arg2, arg3]),
     ]
 
