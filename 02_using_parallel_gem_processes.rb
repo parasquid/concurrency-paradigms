@@ -1,9 +1,8 @@
 require "parallel"
 require "ruby-progressbar"
-require 'etc'
 require_relative "numeric"
 
-NUM_PROCESSORS = Etc.nprocessors
+NUM_PROCESSORS = 4
 
 slices = []
 (FIRST..LAST).each_slice(LAST / NUM_PROCESSORS) { |slice| slices << slice }

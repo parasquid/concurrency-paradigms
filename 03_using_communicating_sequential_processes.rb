@@ -1,9 +1,8 @@
 require "concurrent"
 require "concurrent-edge"
-require 'etc'
 require_relative "numeric"
 
-WORKER_COUNT = Etc.nprocessors
+WORKER_COUNT = 4
 Channel = Concurrent::Channel
 
 work = Channel.new(capacity: LAST)
