@@ -1,22 +1,16 @@
 defmodule Number do
-  @simulate_network_latency true
-  @network_latency 200 #miliseconds
-
-  def is_palindrome?(number) do
-    if @simulate_network_latency, do: :timer.sleep(@network_latency)
+  def is_palindrome?(number) when is_integer(number) do
     str = to_string(number)
     str == String.reverse(str)
   end
+  def is_palindrome?(_), do: false
 
-  def is_prime?(number) do
-    if @simulate_network_latency, do: :timer.sleep(@network_latency)
+  def is_prime?(number) when is_integer(number) do
     Enum.all?(2..number-1, fn(divider) -> is_prime?(number, divider) end)
   end
+  def is_prime?(_), do: false
 
   defp is_prime?(number, _divider) when number <= 1, do: false
   defp is_prime?(number, _divider) when number <= 3, do: true
-
-  defp is_prime?(number, divider) do
-    if rem(number, divider) == 0, do: false, else: true
-  end
+  defp is_prime?(number, divider), do: rem(number, divider) != 0
 end
