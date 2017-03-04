@@ -2,12 +2,12 @@ defmodule Server do
   @simulate_network_latency true
   @network_latency 200 #miliseconds
 
-  def prime_palindrome(number) do
-    number |> prime_value(false) |> palindrome_value(true)
+  def prime_palindrome(number, print? \\ true) do
+    number |> prime_value(false) |> palindrome_value(print?)
   end
 
-  def palindrome_prime(number) do
-    number |> palindrome_value(false) |> prime_value(true)
+  def palindrome_prime(number, print? \\ true) do
+    number |> palindrome_value(false) |> prime_value(print?)
   end
 
   def prime_value(number, print? \\ true) do
