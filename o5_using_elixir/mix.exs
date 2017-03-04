@@ -30,6 +30,7 @@ defmodule O5UsingElixir.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [{:flow, "~> 0.11.0"},
+     {:poolboy,   "1.5.1"},
      {:benchee, "~> 0.6", only: :dev}]
   end
 end
