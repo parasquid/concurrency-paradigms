@@ -2,27 +2,31 @@ require "concurrent"
 require "concurrent-edge"
 require_relative "numeric"
 
+Concurrent.use_stdlib_logger(Logger::FATAL)
+
 class Worker < Concurrent::Actor::RestartingContext
   def initialize(out:)
     @out = out
   end
 end
 
+
+
 class MessagePrinter < Worker
   def on_message(n)
-    puts "#{n} is a palindromic prime"
+    puts "#{n} is a palindromic prime" if n
   end
 end
 
 class PalindromeCalculator < Worker
   def on_message(n)
-    @out.tell(n) if n.is_palindrome?
+    @out.tell(n.is_palindrome? ? n : nil)
   end
 end
 
 class PrimeCalculator < Worker
   def on_message(n)
-    @out.tell(n) if n.is_prime?
+    @out.tell(n.is_prime? ? n : nil)
   end
 end
 
