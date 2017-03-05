@@ -1,45 +1,28 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    celluloid (0.17.3)
-      celluloid-essentials
-      celluloid-extras
-      celluloid-fsm
-      celluloid-pool
-      celluloid-supervision
-      timers (>= 4.1.1)
-    celluloid-essentials (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-extras (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-fsm (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-pool (0.20.5)
-      timers (>= 4.1.1)
-    celluloid-supervision (0.20.6)
-      timers (>= 4.1.1)
     concurrent-ruby (1.0.4)
     concurrent-ruby-edge (0.3.0)
       concurrent-ruby (= 1.0.4)
     concurrent-ruby-ext (1.0.4)
       concurrent-ruby (= 1.0.4)
     eventmachine (1.2.0.1)
-    hitimes (1.2.4)
     parallel (1.10.0)
+    rubinius-actor (0.0.2)
+      rubinius-core-api
+    rubinius-core-api (0.0.1)
     ruby-progressbar (1.8.1)
-    timers (4.1.2)
-      hitimes
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  celluloid
   concurrent-ruby
   concurrent-ruby-edge
   concurrent-ruby-ext
   eventmachine
   parallel
+  rubinius-actor
   ruby-progressbar
 
 BUNDLED WITH
