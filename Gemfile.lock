@@ -6,11 +6,10 @@ GEM
       concurrent-ruby (= 1.0.4)
     concurrent-ruby-ext (1.0.4)
       concurrent-ruby (= 1.0.4)
+    em-promise (1.1.1)
+      eventmachine (>= 1.0.0.beta.4)
     eventmachine (1.2.0.1)
     parallel (1.10.0)
-    rubinius-actor (0.0.2)
-      rubinius-core-api
-    rubinius-core-api (0.0.1)
     ruby-progressbar (1.8.1)
 
 PLATFORMS
@@ -20,10 +19,10 @@ DEPENDENCIES
   concurrent-ruby
   concurrent-ruby-edge
   concurrent-ruby-ext
+  em-promise
   eventmachine
   parallel
-  rubinius-actor
   ruby-progressbar
 
 BUNDLED WITH
-   1.14.3
+   1.14.6
