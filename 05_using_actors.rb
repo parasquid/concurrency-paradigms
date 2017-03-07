@@ -2,15 +2,13 @@ require "concurrent"
 require "concurrent-edge"
 require_relative "numeric"
 
-Concurrent.use_stdlib_logger(Logger::FATAL)
-
 class Worker < Concurrent::Actor::RestartingContext
   def initialize(out:)
     @out = out
   end
 end
 
-
+Concurrent.use_stdlib_logger(Logger::FATAL)
 
 class MessagePrinter < Worker
   def on_message(n)
